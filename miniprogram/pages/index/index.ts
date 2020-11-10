@@ -9,6 +9,11 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
   },
+  navToCanvas2d() {
+    wx.navigateTo({
+      url: '../canvas2d/index'
+    })
+  },
   // 事件处理函数
   bindViewTap() {
     wx.navigateTo({

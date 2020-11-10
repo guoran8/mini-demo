@@ -1,0 +1,14 @@
+<canvas
+    type="2d"
+    id="canvas"
+    style="width: 690px; height: 400px;"
+></canvas>
+<view style="margin-top: 20px;">
+    <canvas
+        type="2d"
+        id="myCanvas"
+        style="width: 690px; height: 400px;"
+    />
+</view>
+<view bindtap="onPaint">Paint</view>
+<view bindtap="onSave">Save Image</view>
