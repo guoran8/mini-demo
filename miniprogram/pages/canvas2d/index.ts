@@ -133,7 +133,19 @@ Page({
         const img = canvas.createImage()
         img.src = 'http://image.woshipm.com/wp-files/2020/04/iFjn4wzv70NfDk2l2OWR.jpg'
         img.onload = () => {
-          ctx.drawImage(img, 0, 0, 20, 60)
+          ctx.save()
+          ctx.arc(80, 230, 30, 0, 2 * Math.PI)
+          ctx.fillStyle = '#EEEEEE'
+          ctx.fill()
+          ctx.clip()
+
+          ctx.beginPath();
+          ctx.arc(80, 230, 26, 0, 2 * Math.PI)
+          ctx.fillStyle = '#000000'
+          ctx.fill()
+          ctx.clip()
+          ctx.drawImage(img, 0, 0, 232, 232, 54, 204, 52, 52)
+          ctx.restore()
         }
 
         ctx.font = "bold 22px Arial";
