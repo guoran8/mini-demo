@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "miniprogram/pages/canvas2d"
+    "miniprogram/pages/canvas2d",
+    "pages/wrapShare/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

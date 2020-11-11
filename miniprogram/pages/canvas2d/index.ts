@@ -5,6 +5,7 @@ Page({
     position: {} as any,
     x: 0 as any,
     _img: '' as any,
+    img: '' as any,
     canvas: null as any,
     width: 0,
     height: 0
@@ -149,14 +150,46 @@ Page({
         ctx.fillText(text, 10, 40)
 
         _this._autoWrap('测试换行测试换行测试换行测试换行测试换行', 20, 60, 200, 20, ctx)
+
+        ctx.font = "normal 22px Arial";
+        ctx.fillStyle = "orange"
+        _this._fillText('测试换行123测试换行123测试换行123测试换行123测试换行000123456789abcdefghi123123123123123123123', 24, 100, 200, 30, 5, ctx)
       })
+  },
+  _fillText(message: string, x: number, y: number, maxWidth: number, lineHeight: number, lineNum: number, ctx: any) {
+    const _this = this
+    let arrText = message.split('')
+    let line = ''
+    let lineCount = 1
+
+    for(let i = 0; i < arrText.length; i++) {
+      const tempLine = line + arrText[i]
+      const lineWidth = ctx.measureText(tempLine).width
+      if (lineWidth > maxWidth && i > 0) {
+        if (lineNum <= lineCount) {
+          line = _this._fittingText(tempLine, maxWidth, ctx)
+          console.log('line', line)
+          break
+        } else {
+          ctx.fillText(line, x, y)
+          line = arrText[i]
+          lineCount += 1
+          y += lineHeight
+        }
+      } else {
+        line += arrText[i]
+      }
+    }
+
+    ctx.fillText(line, x, y)
   },
   _autoWrap(message: string, x:number, y:number, maxWidth: number, lineHeight: number, ctx: any) {
       let arrText = message.split('');
       let line = '';
+
       for (let n = 0; n < arrText.length; n++) {
           let testLine = line + arrText[n];
-          let metrics = ctx.measureText(testLine);
+          let metrics = ctx.measureText(testLine); // 检查字体宽度
           let testWidth = metrics.width;
           if (testWidth > maxWidth && n > 0) {
               ctx.fillText(line, x, y);
@@ -204,6 +237,26 @@ Page({
     }
   }
   },
+  onExport() {
+    const _this = this
+    wx.canvasToTempFilePath({
+      x: 0,
+      y: 0,
+      width: _this.data.width,
+      height: _this.data.height,
+      canvas: this.data.canvas, // 使用2D 需要传递的参数
+      quality: 1,
+      success(res) {
+        console.log(res.tempFilePath)
+        _this.setData({
+          img: res.tempFilePath
+        })
+      },
+      fail(err) {
+        console.log('error', err)
+      }
+    })
+  },
   onSave() {
     console.log('save')
     const _this = this
@@ -229,5 +282,12 @@ Page({
         console.log('error', err)
       }
     })
+  },
+  onShareAppMessage() {
+    return {
+      title: '测试title',
+      path: '/pages/index/index',
+      imageUrl: this.data.img
+    }
   }
 })

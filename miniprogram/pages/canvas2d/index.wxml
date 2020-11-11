@@ -12,3 +12,4 @@
 </view>
 <view bindtap="onPaint">Paint</view>
 <view bindtap="onSave">Save Image</view>
+<view bindtap="onExport">Export Image</view>
